@@ -7,4 +7,6 @@ bool Task::operator<(const Task& other) const {
 std::ostream& operator<<(std::ostream& os, const Task& t) {
     os << "Task: \"" << t.name << "\" [Priority: " << t.priority
        << ", Assigned to: " << t.assigned_to << "]";
+    
+    return os;
 }

@@ -16,6 +16,8 @@ public:
     // stop_ and worker_ are yours to use -- figure out how.
     void start_work(int seconds);
 
+    virtual ~MobileRobot();
+
 protected:
     double            speed_;
     std::thread       worker_;
