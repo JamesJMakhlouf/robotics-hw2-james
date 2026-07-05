@@ -30,6 +30,11 @@ public:
 private:
     // std::map allows the fleet to find or remoce any robot by its
     // unique id without performing slow linear scans. 
+
+    // we use std::shared_ptr instead of std::unique_ptr because multiple
+    // parts of the program need access to the same robot at the same time.
+    // for example, both the Fleet and active background threads need to reference
+    // a robot without stripping ownership from one another.
     std::map<std::string, std::shared_ptr<Robot>> robots_;
     
     // std::priority_queue maintains elements sorted according to their
