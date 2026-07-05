@@ -31,7 +31,7 @@ std::string Robot::status() const {
     return status_;
 }
 
-void set_status(const std::string& status) {
+void Robot::set_status(const std::string& status) {
     status_ = status;
 }
 
@@ -43,7 +43,6 @@ std::string Robot::operator+(const Robot& other) const {
     return name_ + " + " + other.name();
 }
 
-// Why friend and not a regular method?
 // In `std::coud << robot`, the left-hand operand is an `srd::ostream`,
 // not a Robot object. C++ member function require the host class
 // object to be on the left side, so this must be a non-member free
