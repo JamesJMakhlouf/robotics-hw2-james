@@ -27,6 +27,8 @@ public:
     Fleet& operator-=(const std::string& id);
     friend std::ostream& operator<<(std::ostream& os, const Fleet& f);
 
+    void find_low_battery() const;
+
 private:
     // std::map allows the fleet to find or remoce any robot by its
     // unique id without performing slow linear scans. 

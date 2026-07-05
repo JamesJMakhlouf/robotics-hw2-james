@@ -1,6 +1,7 @@
 #include "fleet.hpp"
 #include <stdexcept>
 #include <iostream>
+#include <algorithm>
 
 void Fleet::add(std::shared_ptr<Robot> robot) {
     if (!robot) return;
@@ -8,7 +9,23 @@ void Fleet::add(std::shared_ptr<Robot> robot) {
 }
 
 void Fleet::remove(const std::string& id) {
-    robots_.erase(id);
+    size_t erased_counts = robots_.erase(id);
+
+    if (erased_counts > 0) {
+        decltype(tasks_) temp_queue;
+
+        while(!tasks_.empty()) {
+            const Task& task = tasks_.top();
+
+            if (task.assigned_to != id) temp_queue.push(task);
+
+            tasks_.pop();
+        }
+
+        tasks_ = std::move(temp_queue);
+    } else {
+        std::cout << "No robot with id: " << id << "\n";
+    }
 }
 
 std::shared_ptr<Robot> Fleet::find(const std::string& id) const {
@@ -85,4 +102,19 @@ std::ostream& operator<<(std::ostream& os, const Fleet& f) {
         os << " - " << *robot << "\n";
     }
     return os;
+}
+
+void Fleet::find_low_battery() const {
+    std::cout << "--- Scanning fleet for units below 20% battery ---\n";
+    auto it = std::find_if(robots_.begin(), robots_.end(),
+        [](const std::pair<std::string, std::shared_ptr<Robot>>& pair) {
+            return pair.second->battery() < 20;
+        }
+    );
+
+    if (it != robots_.end()) {
+        std::cout << "Found low-battery unit: \n" << it->second;
+    } else {
+        std::cout << "All fleet units are above 20% battery capacity.\n";
+    }
 }
