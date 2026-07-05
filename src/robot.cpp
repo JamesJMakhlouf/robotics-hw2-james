@@ -31,6 +31,10 @@ std::string Robot::status() const {
     return status_;
 }
 
+void set_status(const std::string& status) {
+    status_ = status;
+}
+
 bool Robot::operator==(const Robot& other) const {
     return id_ == other.id();
 }
@@ -50,8 +54,8 @@ std::string Robot::operator+(const Robot& other) const {
 // to look inside.
 std::ostream& operator<<(std::ostream& os, const Robot& r) {
     os << "[" << r.type() << "] ID: " << r.id() 
-       << ", Name: " << r.name() 
-       << ", Battery: " << r.battery() << "%"
-       << ", Status: " << r.status();
+       << ", Name: " << r.name_ 
+       << ", Battery: " << r.battery_ << "%"
+       << ", Status: " << r.status_;
     return os;
 }
