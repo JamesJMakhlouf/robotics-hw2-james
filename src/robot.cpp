@@ -13,6 +13,7 @@ void Robot::charge() {
     }
     battery_ = 100;
     status_ = "charging";
+    std::cout << "Battery charged to 100%.\n";
 }
 
 std::string Robot::id() const {
