@@ -6,15 +6,6 @@ Robot::Robot(const std::string& id, const std::string& name, int battery) : id_(
     battery_ = std::max(0, std::min(100, battery));
 }
 
-void Robot::work() {
-    if(battery_ < 5) {
-        std::cout << "Low battery, please charge.\n";
-        return;
-    }
-    battery_ -=5;
-    status_ = "working";
-}
-
 void Robot::charge() {
     if (battery_ == 100) {
         std::cout << "Battery full.\n";
